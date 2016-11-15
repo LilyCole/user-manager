@@ -55,11 +55,11 @@ describe "User API Tests" do
     expect(response).to have_http_status(204)
   end
 
-  it "DELETE /users/:id/edit should return 410" do
+  it "DELETE /users/:id/edit should return 200" do
     user = User.create(first_name: "Test", last_name: "Name", username: "test", email: "test@test.com")
 
     delete "/users/#{user.id}"
 
-    expect(response).to have_http_status(410)
+    expect(response).to have_http_status(200)
   end
 end
