@@ -2,6 +2,10 @@
 
 ## `GET /users`
 
+**Authentication:**
+
+- Authorization: Token token={your token}
+
 **Response:** 
 
 - Status Code: 200
@@ -18,6 +22,10 @@ Sample Response:
 ```
 
 ## `POST /users`
+
+**Authentication:**
+
+- Authorization: Token token={your token}
 
 **Body Parameters:**
 
@@ -43,6 +51,10 @@ Sample Response:
 
 ## `GET /users/:id/edit`
 
+**Authentication:**
+
+- Authorization: Token token={your token}
+
 **Response:** 
 
 - Status Code: 200
@@ -59,6 +71,10 @@ Sample Response:
 ```
 
 ## `PUT /users/:id`
+
+**Authentication:**
+
+- Authorization: Token token={your token}
 
 **Body Parameters:**
 
@@ -80,6 +96,10 @@ Sample Response:
 ```
 
 ## `DELETE /users/:id/edit`
+
+**Authentication:**
+
+- Authorization: Token token={your token}
 
 **Response:** 
 
