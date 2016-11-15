@@ -40,6 +40,20 @@ class UsersController < ApplicationController
 
   end
 
+  def login
+    user = User.find_by(email: params[:email])
+
+    if user
+      if user.authenticate(params[:password])
+        render :json => user, status: 200
+      else
+        head 401
+      end
+    else
+      render :json => {error: "User not found"}, status: 404
+    end
+  end
+
   private
 
   def user_params
