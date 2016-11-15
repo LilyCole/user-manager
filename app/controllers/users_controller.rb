@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     if user.update_attributes(user_params)
-      render :json => {error: "User updated successfully"}, status: 204
+      render :json => {success: "User updated successfully"}, status: 204
     else
       render :json => {error: "Failed to update User"}, status: 400
     end
