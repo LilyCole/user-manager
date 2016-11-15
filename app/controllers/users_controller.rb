@@ -16,17 +16,17 @@ class UsersController < ApplicationController
 
   def edit
     user = User.find(params[:id])
-    
+
     render :json => user, status: 200
   end
 
   def update
     user = User.find(params[:id])
 
-    if user.update(user_params)
-      render :json => user, status: 200
+    if user.update_attributes(user_params)
+      render :json => {error: "User updated successfully"}, status: 204
     else
-      render :json => {error: "User validation failed"}, status: 400
+      render :json => {error: "Failed to update User"}, status: 400
     end
   end
 
