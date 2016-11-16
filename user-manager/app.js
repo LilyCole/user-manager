@@ -92,6 +92,16 @@ app.controller("loginController", function($http) {
 
   vm.loginUser = function(event) {
     event.preventDefault();
+
+    $http({
+      method: "POST",
+      url: "http://localhost:3000/login",
+      data: vm.user
+    }).success(function(user) {
+      console.log(user);
+    }).error(function() {
+      alert("Unauthorized!");
+    });
   }
 
 });
