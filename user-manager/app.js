@@ -137,7 +137,7 @@ app.service("AuthService", function($location) {
   }
 
   this.isAuthenticated = function() {
-    if (this.getToken()) {
+    if (this.current_user()) {
       return;
     } else {
       $location.path("/login");
