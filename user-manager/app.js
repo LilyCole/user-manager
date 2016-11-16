@@ -108,7 +108,18 @@ app.controller("loginController", function($http, $location, AuthService) {
 });
 
 app.service("AuthService", function() {
+
   this.setSession = function(user) {
-    localStorage.setItem("current_user", JSON.stringify(user));
+    return localStorage.setItem("current_user", JSON.stringify(user));
   }
+
+  this.getToken = function() {
+    var currentUser = JSON.parse(localStorage.getItem("current_user"));
+    return currentUser.auth_token;
+  }
+
+  this.currentUser = function() {
+    return JSON.parse(localStorage.getItem("current_user"));
+  }
+  
 });
