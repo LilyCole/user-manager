@@ -12,6 +12,11 @@ app.config(function($routeProvider) {
       controller: "EditController",
       controllerAs: "editCtrl"
     })
+    .when("/login", {
+      templateUrl: "templates/login.html",
+      controller: "loginController",
+      controllerAs: "loginCtrl"
+    })
     .otherwise({
       redirectTo: "/users"
     })
@@ -47,4 +52,46 @@ app.controller("UsersController", function($http) {
       });
   }
   
+});
+
+app.controller("EditController", function($http, $routeParams, $location) {
+
+  var vm = this;
+  id = $routeParams.id;
+
+  $http({
+  method: 'GET',
+  url: 'http://localhost:3000/users/'+id+'/edit'
+    }).success(function(response) {
+        vm.user = response;
+    }).error(function(response) {
+        alert("Error getting users");
+    });
+  
+  vm.submitEdits = function(event) {
+    event.preventDefault();
+
+    $http({
+      method: 'PUT',
+      url: 'http://localhost:3000/users/' + id,
+      data: {
+          user: vm.user
+        }
+      }).success(function(response) {
+          $location.path("/users");
+      }).error(function(response) {
+          alert("Error editing user");
+      });
+  }
+
+});
+
+app.controller("loginController", function($http) {
+
+  var vm = this;
+
+  vm.loginUser = function(event) {
+    event.preventDefault();
+  }
+
 });

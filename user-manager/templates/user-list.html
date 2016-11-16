@@ -2,7 +2,11 @@
   <h1>User Manager</h1>
 
   <div>
-    <a href="#" class="btn btn-primary" data-target="#add-user-modal" data-toggle="modal">Add User</a>
+    <p><a href="#" class="btn btn-primary" data-target="#add-user-modal" data-toggle="modal">Add User</a></p>
+  </div>
+
+  <div>
+   <p> <a href="#/login" class="btn btn-primary">Login</a></p>
   </div>
 </div>
 
@@ -31,7 +35,7 @@
           {{user.email}}
         </td>
         <td>
-          <a href="#" class="btn btn-primary">Edit</a>
+          <a href="#/users/{{user.id}}/edit" class="btn btn-primary">Edit</a>
         </td>
       </tr>
     </tbody>
