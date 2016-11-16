@@ -86,7 +86,7 @@ app.controller("EditController", function($http, $routeParams, $location) {
 
 });
 
-app.controller("loginController", function($http) {
+app.controller("loginController", function($http, $location, AuthService) {
 
   var vm = this;
 
@@ -98,10 +98,17 @@ app.controller("loginController", function($http) {
       url: "http://localhost:3000/login",
       data: vm.user
     }).success(function(user) {
-      console.log(user);
+      AuthService.setSession(user);
+      $location.path("/users");
     }).error(function() {
       alert("Unauthorized!");
     });
   }
 
+});
+
+app.service("AuthService", function() {
+  this.setSession = function(user) {
+    localStorage.setItem("current_user", JSON.stringify(user));
+  }
 });
