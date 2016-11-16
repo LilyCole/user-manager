@@ -22,13 +22,17 @@ app.config(function($routeProvider) {
     })
 });
 
-app.controller("UsersController", function($http) {
+app.controller("UsersController", function($http, AuthService) {
+  AuthService.isAuthenticated();
 
   var vm = this;
 
   $http({
   method: 'GET',
-  url: 'http://localhost:3000/users'
+  url: 'http://localhost:3000/users',
+  headers: {
+    "Authorization": "Token token=" + AuthService.getToken()
+  }
     }).success(function(response) {
         vm.users = response;
     }).error(function(response) {
@@ -40,6 +44,9 @@ app.controller("UsersController", function($http) {
     $http({
       method: 'POST',
       url: 'http://localhost:3000/users',
+      headers: {
+        "Authorization": "Token token=" + AuthService.getToken()
+      },
       data: {
           user: vm.user
         }
@@ -54,14 +61,18 @@ app.controller("UsersController", function($http) {
   
 });
 
-app.controller("EditController", function($http, $routeParams, $location) {
-
+app.controller("EditController", function($http, $routeParams, $location, AuthService) {
+  AuthService.isAuthenticated();
+  
   var vm = this;
   id = $routeParams.id;
 
   $http({
   method: 'GET',
-  url: 'http://localhost:3000/users/'+id+'/edit'
+  url: 'http://localhost:3000/users/'+id+'/edit',
+  headers: {
+        "Authorization": "Token token=" + AuthService.getToken()
+  }
     }).success(function(response) {
         vm.user = response;
     }).error(function(response) {
@@ -74,6 +85,9 @@ app.controller("EditController", function($http, $routeParams, $location) {
     $http({
       method: 'PUT',
       url: 'http://localhost:3000/users/' + id,
+      headers: {
+        "Authorization": "Token token=" + AuthService.getToken()
+      },
       data: {
           user: vm.user
         }
@@ -107,7 +121,7 @@ app.controller("loginController", function($http, $location, AuthService) {
 
 });
 
-app.service("AuthService", function() {
+app.service("AuthService", function($location) {
 
   this.setSession = function(user) {
     return localStorage.setItem("current_user", JSON.stringify(user));
@@ -121,5 +135,13 @@ app.service("AuthService", function() {
   this.currentUser = function() {
     return JSON.parse(localStorage.getItem("current_user"));
   }
-  
+
+  this.isAuthenticated = function() {
+    if (this.getToken()) {
+      return;
+    } else {
+      $location.path("/login");
+    }
+  }
+
 });
